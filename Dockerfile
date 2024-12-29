@@ -4,9 +4,11 @@ ARG USERNAME=json_exporter
 
 ADD pyproject.toml requirements.txt /tmp/code/
 ADD json_exporter /tmp/code/json_exporter/
+ADD json-exporter-secret-sub-entrypoint.sh /json-exporter-secret-sub-entrypoint.sh
 
 WORKDIR /tmp/code
 
+RUN apk add envsubst # used for custom entryscript
 RUN pip install --no-cache-dir --upgrade pip \
   && pip install --no-cache-dir  -r requirements.txt \
   && pip install --no-cache-dir . \
